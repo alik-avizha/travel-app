@@ -9,56 +9,49 @@ import jsxA11y from 'eslint-plugin-jsx-a11y'
 import prettier from 'eslint-plugin-prettier/recommended'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'node_modules'] },
   {
-    // specify the formats on which to apply the rules below
     files: ['**/*.{ts,tsx}'],
-    // use predefined configs in installed eslint plugins
     extends: [
-      // js
       js.configs.recommended,
-      // ts
       ...tseslint.configs.recommended,
-      // react
       react.configs.flat.recommended,
-      // import
       importPlugin.flatConfigs.recommended,
-      // a11y (accessibility
       jsxA11y.flatConfigs.recommended,
-      // prettier
-      prettier
+      prettier,
     ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname
-      }
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
-    // specify used plugins
     plugins: {
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
+      'react-refresh': reactRefresh,
     },
     settings: {
-      // for eslint-plugin-react to auto detect react version
-      react: {
-        version: 'detect'
-      },
-      // for eslint-plugin-import to use import alias
+      react: { version: 'detect' },
       'import/resolver': {
         typescript: {
-          project: './tsconfig.json'
-        }
-      }
+          project: ['./tsconfig.app.json'],
+        },
+        alias: {
+          map: [['@', './src']],
+          extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+        },
+      },
     },
     rules: {
-      // set of custom rules
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['error'] }],
       'react/button-has-type': 'error',
       'react/react-in-jsx-scope': ['off'],
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
-    }
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
   }
 )
