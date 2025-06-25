@@ -10,7 +10,4 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-        env:
-          NODE_OPTIONS: '--max_old_space_size=8192'
-      - run: yarn install --frozen-lockfile --check-files --silent
-      - run: yarn lint
+      - run: npx --yes oxlint@latest --deny-warnings
