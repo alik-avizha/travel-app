@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home } from '@/pages/home.tsx'
-import { Sidebar } from '@/components/sidebar/sidebar.tsx'
-import { ErrorBoundary } from '@/components/error-boundary/error-boundary.tsx'
 import { Hotels } from '@/pages/hotels.tsx'
 import { HotelDetails } from '@/pages/hotel-details.tsx'
+import { Sidebar } from '@/components/sidebar'
+import { ErrorBoundary } from '@/components/error-boundary'
 
 export default function App() {
   return (
