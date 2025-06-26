@@ -6,7 +6,7 @@ export function Sidebar() {
 
   return (
     <aside className="flex flex-col items-center py-10 px-4 rounded-tr-3xl rounded-br-3xl border-2 border-white  h-full min-w-[60px] shadow-md">
-      <img src="public/logo.png" alt="Logo" className="w-8 mb-20" />
+      <img src="/logo.png" alt="Logo" className="w-8 mb-20" />
       {NAVIGATION_LINKS.map(link => (
         <Link
           key={link.to}
