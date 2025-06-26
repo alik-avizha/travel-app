@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
-import { HotelList } from '@/components/hotel-list/hotel-list.tsx'
-import { hotelStore } from '@/stores/hotel-store.ts'
+import { HotelList } from '@/components/hotel-list'
+import { hotelStore } from '@/stores'
 
 export const Hotels = observer(() => {
   useEffect(() => {

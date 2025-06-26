@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
-import { hotelStore } from '@/stores/hotel-store.ts'
+import { hotelStore } from '@/stores'
 
 export const HotelDetails = observer(() => {
   const { id } = useParams<{ id: string }>()

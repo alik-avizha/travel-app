@@ -1,9 +1,10 @@
-import type { Hotel } from '@/types/hotel.ts'
 import { makeAutoObservable, runInAction } from 'mobx'
-import { fetchHotels } from '@/api/hotels-api.ts'
+import { fetchHotels } from '@/api'
+import type { Hotel } from '@/types'
 
 class HotelStore {
   hotels: Hotel[] = []
+  filteredHotels: Hotel[] = []
   selectedHotel: Hotel | null = null
   loading = false
   error: string | null = null
@@ -18,6 +19,7 @@ class HotelStore {
       const data = await fetchHotels()
       runInAction(() => {
         this.hotels = data
+        this.filteredHotels = data
         this.loading = false
       })
     } catch {
@@ -26,6 +28,20 @@ class HotelStore {
         this.loading = false
       })
     }
+  }
+
+  searchHotels(query: string) {
+    if (!query.trim()) {
+      this.filteredHotels = this.hotels
+      return
+    }
+
+    const lowerQuery = query.toLowerCase()
+    this.filteredHotels = this.hotels.filter(
+      hotel =>
+        hotel.name.toLowerCase().includes(lowerQuery) ||
+        hotel.location.toLowerCase().includes(lowerQuery)
+    )
   }
 
   async selectHotel(id: string) {
