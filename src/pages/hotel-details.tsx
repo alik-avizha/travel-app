@@ -1,15 +1,18 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { hotelStore } from '@/stores'
 
 export const HotelDetails = observer(() => {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (id) hotelStore.selectHotel(id)
     return () => hotelStore.clearSelectedHotel()
   }, [id])
+
+  const handleReturnClick = () => navigate(-1)
 
   const hotel = hotelStore.selectedHotel
   if (hotelStore.loading) return <div>Загрузка...</div>
@@ -17,9 +20,13 @@ export const HotelDetails = observer(() => {
 
   return (
     <div className="p-8 flex-1">
-      <Link to="/hotels" className="text-orange-500 mb-4 inline-block">
-        ← Назад к списку
-      </Link>
+      <button
+        type="button"
+        onClick={handleReturnClick}
+        className="text-orange-500 mb-4 inline-block cursor-pointer"
+      >
+        ← Назад
+      </button>
       <div className="flex flex-col md:flex-row gap-8">
         <img
           src={hotel.image}
